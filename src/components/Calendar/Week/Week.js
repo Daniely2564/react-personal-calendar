@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { Week, Row, WeekDay, TimeRow } from "./styles";
 
-const WeekComp = () => {
+const WeekComp = ({ dateContext, getWeek }) => {
   const times = [
     "12:00 A.M.",
     "1:00 A.M.",
@@ -26,6 +26,7 @@ const WeekComp = () => {
     "11:00 P.M."
   ];
   const weekDays = moment.weekdaysShort();
+  const week = getWeek();
   return (
     <Week>
       <Row>
@@ -33,32 +34,31 @@ const WeekComp = () => {
         <RenderTimeRow times={times} />
       </Row>
       <Row>
-        <WeekDay>{weekDays[0]}</WeekDay>
+        <WeekDay>{`${weekDays[0]} ${week[0]}`}</WeekDay>
       </Row>
       <Row>
-        <WeekDay>{weekDays[1]}</WeekDay>
+        <WeekDay>{`${weekDays[1]} ${week[1]}`}</WeekDay>
       </Row>
       <Row>
-        <WeekDay>{weekDays[2]}</WeekDay>
+        <WeekDay>{`${weekDays[2]} ${week[2]}`}</WeekDay>
       </Row>
       <Row>
-        <WeekDay>{weekDays[3]}</WeekDay>
+        <WeekDay>{`${weekDays[3]} ${week[3]}`}</WeekDay>
       </Row>
       <Row>
-        <WeekDay>{weekDays[4]}</WeekDay>
+        <WeekDay>{`${weekDays[4]} ${week[4]}`}</WeekDay>
       </Row>
       <Row>
-        <WeekDay>{weekDays[5]}</WeekDay>
+        <WeekDay>{`${weekDays[5]} ${week[5]}`}</WeekDay>
       </Row>
       <Row>
-        <WeekDay>{weekDays[6]}</WeekDay>
+        <WeekDay>{`${weekDays[6]} ${week[6]}`}</WeekDay>
       </Row>
     </Week>
   );
 };
 
 const RenderTimeRow = ({ times }) => {
-  console.log(times.length);
   return (
     <React.Fragment>
       {times.map(time => {

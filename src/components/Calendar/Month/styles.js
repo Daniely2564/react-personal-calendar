@@ -18,6 +18,7 @@ const Week = styled.div`
 const Day = styled.div`
   border: 0.7px solid #ddd;
   flex: 1;
+  overflow: hidden;
   .day {
     text-align: right;
     margin-right: 10px;
@@ -34,4 +35,16 @@ const WeekDay = styled.div`
   font-weight: bold;
 `;
 
-export { Month, Week, WeekDays, Day, WeekDay };
+const Schedule = styled.div`
+  background: ${props => props.color};
+  color: white;
+  text-align: center;
+  border-radius: 3px;
+  font-size: 18px;
+  padding: 3px;
+  width: 99%;
+  cursor: pointer;
+  margin: 0 auto;
+`;
+
+export { Month, Week, WeekDays, Day, WeekDay, Schedule };

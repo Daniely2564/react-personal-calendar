@@ -1,13 +1,19 @@
 import React from "react";
 import moment from "moment";
-import { Month, Week, WeekDays, Day, WeekDay } from "./styles";
+import {
+  Month,
+  Week,
+  WeekDays,
+  Day as DayStyle,
+  WeekDay,
+  Schedule
+} from "./styles";
 const MonthComp = props => {
   let year = props.year();
   let month = props.month();
   let daysInMonth = props.daysInMonth();
   let currentDay = props.currentDay();
   let firstDayOfMonth = props.firstDayOfMonth();
-
   return (
     <Month>
       <WeekDays>
@@ -19,13 +25,37 @@ const MonthComp = props => {
           );
         })}
       </WeekDays>
-      <RenderDays {...{ firstDayOfMonth, currentDay, daysInMonth }} />
+      <RenderDays
+        Helper={props.Helper}
+        {...{ firstDayOfMonth, currentDay, daysInMonth, year, month }}
+      />
     </Month>
   );
 };
 
-const RenderDays = ({ firstDayOfMonth, daysInMonth }) => {
+const RenderDays = ({ firstDayOfMonth, daysInMonth, Helper, year, month }) => {
   const initialStart = 7 - firstDayOfMonth;
+  const Day = props => {
+    let dates = [];
+    if (props.date) {
+      dates = [...Helper.filterByDate(props.date)];
+    }
+    return (
+      <DayStyle>
+        {props.children}
+        <div>
+          {dates.map(date => {
+            return (
+              <Schedule key={date.startDate} color={date.color}>
+                {date.title}
+              </Schedule>
+            );
+          })}
+        </div>
+      </DayStyle>
+    );
+  };
+
   return (
     <React.Fragment>
       <Week>
@@ -40,7 +70,7 @@ const RenderDays = ({ firstDayOfMonth, daysInMonth }) => {
           }
           for (let i = 1; i <= initialStart; i++) {
             arr.push(
-              <Day key={`day${i}`}>
+              <Day key={`day${i}`} date={`${year}-${month}-${i}`}>
                 <div className="day">{i}</div>
               </Day>
             );
@@ -55,7 +85,10 @@ const RenderDays = ({ firstDayOfMonth, daysInMonth }) => {
           let startNum = initialStart + 1 + i * 7;
           for (let j = startNum; j < startNum + 7; j++) {
             days.push(
-              <Day key={`day${j}`}>
+              <Day
+                key={`day${j}`}
+                date={j > daysInMonth ? "" : `${year}-${month}-${j}`}
+              >
                 <div className="day">{j > daysInMonth ? "" : j}</div>
               </Day>
             );
